@@ -1,131 +1,47 @@
-#pragma once
+﻿#pragma once
+// 포트폴리오용 발췌 선언입니다. 팀 공통 기반과 본인 추가 항목을 구분했습니다.
+// 전체 선언·구현을 포함하지 않으므로 단독 빌드용이 아닙니다.
 #include "CGameObject.h"
-#include "CGameObjMgr.h"
 #include "CBancho.h"
 #include "CRestaurantMgr.h"
 
-namespace Engine
-{
-	class CRcPlayerTex;
-	class CTransform;
-	class CTexture;
-	class CCalculator;
-	class CAnimator;
-	class CAnimation;
-}
-
-
 class CBancho_Player : public CGameObject
 {
-	using	WEAPON = CGameObjMgr::WEAPON;
+public:
+    // 기존 팀 코드: 본인의 녹차 연동 코드에서 사용하는 애니메이션 상태입니다.
+    enum BANCHOPLAYER_ANIM {
+        None,
+        IDLE, WALK, RUN, TIRED,
+        SERVE_IDLE, SERVE_WALK, SERVE_RUN, SERVE_TIRED,
+        WASABI, TEA, EAT
+    };
+
+    // 기존 함수 틀에 본인이 추가한 부분만 CPP에 발췌했습니다.
+    virtual HRESULT Ready_GameObject();
+    virtual void LateUpdate_GameObject(const _float& fTimeDelta);
+    virtual void OnCollision_Stay(CGameObject* pObj) override;
+
+private:
+    // 기존 입력·애니메이션 인터페이스. 애니메이션 구현은 중략했습니다.
+    void Key_Input(const _float& fTimeDelta);
+    void Enter_Animation(BANCHOPLAYER_ANIM eNewAnim);
+
+    // 본인 추가: 음식 버리기와 서빙 데이터 초기화.
+    void Chuck_Food();
+    void Reset_Food();
 
 public:
-	enum BANCHOPLAYER_ANIM {
-		None,
-		IDLE, WALK, RUN, TIRED,
-		SERVE_IDLE, SERVE_WALK, SERVE_RUN, SERVE_TIRED,
-		WASABI,TEA,EAT
-	};
-
+    // 본인 추가: 주문 데이터 조회 및 녹차 제공 종료 시 상태 해제.
+    CRestaurantMgr::CUSTOMER_ORDER Get_OrderFood() { return m_tOrderFood; }
+    void Set_StateTea() { m_bTea = false; }
 
 private:
-	explicit CBancho_Player(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBancho_Player(const CGameObject& rhs);
-	virtual ~CBancho_Player();
+    // 기존 팀 코드의 서빙 상태를 음식 수령·전달 로직에 사용했습니다.
+    _bool m_bServe = false;
 
-public:
-	virtual			HRESULT		Ready_GameObject();
-	virtual			_int		Update_GameObject(const _float& fTimeDelta);
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
-	virtual			void		Render_GameObject();
-	virtual			void		OnCollision_Enter(CGameObject* pObj) override;
-	virtual			void		OnCollision_Stay(CGameObject* pObj) override;
-	virtual			void		OnCollision_Exit(CGameObject* pObj) override;
-private:
-	HRESULT			Add_Component();
-	void			Key_Input(const _float& fTimeDelta);
-	void			Key_Input_Status_Update(const _float& fTimeDelta);
-	_bool			Key_Input_Interaction(const _float& fTimeDelta);
-	void			Key_Input_Movement(const _float& fTimeDelta);
+    // 본인 추가: 녹차 제공 상태와 현재 들고 있는 주문 데이터.
+    _bool m_bTea = false;
+    CRestaurantMgr::CUSTOMER_ORDER m_tOrderFood = {};
 
-
-	HRESULT			Ready_Material();
-	void			Ready_Animation();
-
-private:
-	void			BanCho_Player_Subscribe();
-	void			BanCho_PlayerSound();
-
-private:
-	void			Enter_Animation(BANCHOPLAYER_ANIM eNewAnim);
-	void			Chuck_Food();
-	void			Reset_Food();
-
-public:
-	_float			Get_CurRun_Gauage() { return m_fCurRun_Gauage; }
-	_bool			Get_FlipX() {return m_bFlipX;}
-	CRestaurantMgr::CUSTOMER_ORDER	Get_OrderFood() {return m_tOrderFood;}
-	
-	void			Set_StateTea() { m_bTea = false; }
-
-private:
-	Engine::CRcPlayerTex* m_pBufferCom;
-
-	// �Ϲ� ����
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerIdle;				// �Ϲ� idle
-
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerWalk;				// �Ϲ� walk
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerRun;				// �Ϲ� �ٱ�
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerTired;				// �Ϲ� ����
-
-	// SERVE ����
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerServeIdle;			// �Ϲ� idle
-
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerServeWalk;			// �Ϲ� walk
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerServeRun;			// �Ϲ� �ٱ�
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerServeTired;		// �Ϲ� ����
-
-
-	//QTE		WASABI,TEA
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerWasabi;			// �Ϲ� walk
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerTea;				// �Ϲ� �ٱ�
-	Engine::CTexture* m_pTextureCom_BanCho_PlayerEat;				// �Ա�
-
-
-	Engine::CCalculator* m_pCalculatorCom;
-	Engine::CAnimation* m_pAnimation;
-	Engine::CAnimator* m_pAnimator;
-
-
-public:
-	static CBancho_Player* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
-private:
-	virtual void Free();
-
-
-private:
-	BANCHOPLAYER_ANIM m_eCurAnim = None;
-	BANCHOPLAYER_ANIM m_ePrevAnim = None;
-
-private:
-	_float m_fSpeed;
-
-	CCollider* pCollider;							// �ݶ��̴�
-
-	_bool	m_bFlipX = false;
-
-	_bool	m_bTired = false;
-	_float  m_fMaxRun_Gauage = 100.f;
-	_float  m_fCurRun_Gauage;
-	_float  m_fRecovery_Time = 0.f;
-
-	_bool   m_bServe = false;
-	_bool   m_bTea = false;
-
-	_float  m_fWalkTime = 0.f;
-
-	CRestaurantMgr::CUSTOMER_ORDER m_tOrderFood = {};
-
+    // [중략] 생성자, 이동·렌더링·애니메이션 및 컴포넌트 관련 선언·멤버.
 };
-
