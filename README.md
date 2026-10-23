@@ -18,16 +18,16 @@
 
 <table>
   <tr>
-    <td width="50%" align="center"><b>맵 제작</b><br/>잠수맵·초밥집 공간 구성<br/><sub>GIF 추가 예정</sub></td>
-    <td width="50%" align="center"><b>잠수맵 ESC 인벤토리</b><br/>아이템 목록 탐색·선택·버리기<br/><sub>GIF 추가 예정</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Map.gif" alt="잠수맵 구성 시연" /><br/><b>맵 제작</b></td>
+    <td width="50%" align="center"><img src="docs/Images/Inven_01.gif" alt="잠수맵 ESC 인벤토리 시연" /><br/><b>잠수맵 ESC 인벤토리</b></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><b>초밥집 운영</b><br/>주문 → 조리 → 서빙<br/><sub>GIF 추가 예정</sub></td>
-    <td width="50%" align="center"><b>운영 UI</b><br/>손님 주문·대기 상태와 조리 진행 표시<br/><sub>GIF 추가 예정</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_Open.gif" alt="초밥집 영업 시작 시연" /><br/><b>초밥집 운영</b></td>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_Customer.gif" alt="초밥집 손님과 운영 UI 시연" /><br/><b>운영 UI</b></td>
   </tr>
 </table>
 
-<!-- GIF는 docs/Images에 추가한 후 각 칸에 연결합니다. -->
+
 
 ## 담당 범위
 
@@ -49,7 +49,19 @@
 
 잠수맵과 초밥집의 공간을 구성하고 지형·환경 오브젝트를 배치했습니다. 배치 결과를 저장하고 다시 편집할 수 있도록 팀원과 함께 ImGui 기반 편집 기능을 구현했습니다.
 
-<!-- GIF 추가 예정: 잠수맵 탐색 / 초밥집 맵 / 편집 도구 조작 -->
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/Images/Map.gif" alt="잠수맵 구성" /><br/><sub>잠수맵 구성</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Sushi_Map.gif" alt="초밥집 맵 구성" /><br/><sub>초밥집 맵 구성</sub></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/Images/Edit_01.gif" alt="맵 편집 도구 시연 1 · 공동 구현" /><br/><sub>맵 편집 도구 시연 1 · 공동 구현</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Edit_02.gif" alt="맵 편집 도구 시연 2 · 공동 구현" /><br/><sub>맵 편집 도구 시연 2 · 공동 구현</sub></td>
+  </tr>
+</table>
 
 #### 오브젝트 배치와 속성 편집
 
@@ -81,7 +93,23 @@
 
 잠수 중 확인하는 인벤토리 화면을 구성하고, 획득한 물고기 목록의 탐색·선택·버리기를 구현했습니다. 인벤토리 전체의 입력·목록 관리는 `CInventory`, 개별 슬롯의 표시와 마우스 판정은 `CItemSlot`이 담당합니다.
 
-<!-- GIF 추가 예정: ESC 화면 열기 / 스크롤·선택 / 버리기 확인 -->
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/Images/Inven_01.gif" alt="잠수맵 인벤토리 · 목록 확인" /><br/><sub>잠수맵 인벤토리 · 목록 확인</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Inven_02.gif" alt="잠수맵 인벤토리 · 조작 시연" /><br/><sub>잠수맵 인벤토리 · 조작 시연</sub></td>
+  </tr>
+</table>
+
+<details>
+<summary><b>보트 인벤토리 시연</b></summary>
+
+<p align="center">
+  <img src="docs/Images/Boat_Inven.gif" width="800" alt="보트 인벤토리 시연" />
+</p>
+
+보트에서 인벤토리를 확인하는 추가 시연입니다. 아래 코드 설명과 공개 샘플은 잠수맵 ESC 인벤토리를 중심으로 구성했습니다.
+
+</details>
 
 #### 목록 스크롤과 선택
 
@@ -105,7 +133,12 @@
 
 **손님 입장·착석 → 주문 → 반쵸의 조리 → 플레이어 서빙 → 판매 결과 집계**로 이어지는 운영 흐름을 구현했습니다. 운영 데이터는 `CRestaurantMgr`, 손님과 반쵸의 행동은 각 오브젝트가 처리합니다.
 
-<!-- GIF 추가 예정: 손님 입장부터 주문·조리·서빙까지 / 영업 종료 -->
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_Open.gif" alt="영업 시작과 손님 입장" /><br/><sub>영업 시작과 손님 입장</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_Order.gif" alt="주문·조리·서빙 시연" /><br/><sub>주문·조리·서빙 시연</sub></td>
+  </tr>
+</table>
 
 #### 손님과 주문 관리
 
@@ -138,7 +171,14 @@
 
 손님과 반쵸의 현재 데이터를 읽어 운영 상태를 화면에 표시했습니다. UI에 별도의 주문 상태를 만드는 대신, 연결된 오브젝트의 상태와 진행 시간을 기준으로 표시 내용을 갱신합니다.
 
-<!-- GIF 추가 예정: 주문 강조·대기 게이지 / 조리 진행·완료 슬롯 -->
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_Customer.gif" alt="손님 주문과 조리 상태 UI" /><br/><sub>손님 주문과 조리 상태 UI</sub></td>
+    <td width="50%" align="center"><img src="docs/Images/Restaurant_MiniGame.gif" alt="운영 중 미니게임 연동 시연" /><br/><sub>운영 중 미니게임 연동 시연</sub></td>
+  </tr>
+</table>
+
+시연에는 팀원이 구현한 미니게임도 포함되어 있습니다. 이 절에서 설명하는 담당 UI는 손님 주문·대기 상태와 반쵸의 조리 진행·완료 표시입니다.
 
 #### 손님 주문과 대기 상태
 
